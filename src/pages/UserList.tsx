@@ -7,7 +7,7 @@ import { useState } from "react";
 export const UserList = () => {
   const { users, loading, error, deleteUser } = useUsers();
   const navigate = useNavigate();
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [userIdToDelete, setUserIdToDelete] = useState<number | null>(null);
 
   const handleDelete = () => {

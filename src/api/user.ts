@@ -6,17 +6,24 @@ const API_URL = 'https://jsonplaceholder.typicode.com/users';
 
 export const useUsers = () => {
   const [users, setUsers] = useState<userModel[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasFetched, setHasFetched] = useState<boolean>(false);
 
   const fetchUsers = async () => {
+    if (hasFetched) return
     setLoading(true);
     try {
       const response = await axios.get(API_URL);
       setUsers(response.data);
       setError(null);
+      setHasFetched(true);
     } catch (err) {
-      setError(err.message || 'Error fetching users');
+      if (err instanceof Error) {
+        setError(err.message || 'Error fetching users');
+      } else {
+        setError('Unknown error');
+      }
     } finally {
       setLoading(false);
     }
@@ -26,7 +33,11 @@ export const useUsers = () => {
       const response = await axios.get(`${API_URL}/${id}`);
       return response.data; // Return the user data
     } catch (err) {
-      setError(err.message || 'Error fetching user');
+      if (err instanceof Error) {
+        setError(err.message || 'Error fetching users');
+      } else {
+        setError('Unknown error');
+      }
       return null; // Return null if there was an error
     }
   };
@@ -38,8 +49,15 @@ export const useUsers = () => {
       console.log("Add User Successfully", response.data);
       setUsers((prevUsers) => [...prevUsers, response.data]);
       setError(null);
+      return true
     } catch (err) {
-      setError('Error creating user');
+      if (err instanceof Error) {
+        setError(err.message || 'Error fetching users');
+        return false
+      } else {
+        setError('Unknown error');
+        return false
+      }
     } finally {
       setLoading(false);
     }
@@ -54,8 +72,15 @@ export const useUsers = () => {
         prevUsers.map((user) => (user.id === id ? response.data : user))
       );
       setError(null);
+      return true
     } catch (err) {
-      setError('Error updating user');
+      if (err instanceof Error) {
+        setError(err.message || 'Error fetching users');
+        return false
+      } else {
+        setError('Unknown error');
+        return false
+      }
     } finally {
       setLoading(false);
     }
@@ -68,7 +93,11 @@ export const useUsers = () => {
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
       setError(null);
     } catch (err) {
-      setError('Error deleting user');
+      if (err instanceof Error) {
+        setError(err.message || 'Error fetching users');
+      } else {
+        setError('Unknown error');
+      }
     } finally {
       setLoading(false);
     }
@@ -76,7 +105,7 @@ export const useUsers = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  });
 
   return {
     users,

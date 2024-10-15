@@ -48,3 +48,51 @@ export default tseslint.config({
   },
 });
 ```
+
+validate={(values: userModel) => {
+const errors: userModel = {};
+
+          if(!values.name){
+            errors.name = "Name is required"
+          }
+          if(!values.username){
+            errors.username = "Username is required"
+          }
+          if(!values.email){
+            errors.email = " is required"
+          }
+          if(!values.address.street){
+            errors.address.street = "ກະລຸນາປ້ອນລາຄາສີນຄ້າ"
+          }
+          if(!values.address.suite){
+            errors.address.suite = "ກະລຸນາເລືອກສິນຄ້າ"
+          }
+          if(!values.address.city){
+            errors.address.city = "ກະລຸນາປ້ອນຈະນວນສີນຄ້າ"
+          }
+          if(!values.address.zipcode){
+            errors.address.zipcode = "ກະລຸນາປ້ອນລາຍລະອຽດສີນຄ້າ"
+          }
+          if(!values.address.geo.lat){
+            errors.address.geo.lat = "ກະລຸນາປ້ອນລາຍລະອຽດສີນຄ້າ"
+          }
+          if(!values.address.geo.lng){
+            errors.address.geo.lng = "ກະລຸນາປ້ອນລາຍລະອຽດສີນຄ້າ"
+          }
+          if(!values.phone){
+            errors.phone = "ກະລຸນາປ້ອນລາຍລະອຽດສີນຄ້າ"
+          }
+          if(!values.website){
+            errors.website = "ກະລຸນາປ້ອນລາຍລະອຽດສີນຄ້າ"
+          }
+          if(!values.company.name){
+            errors.company.name = "ກະລຸນາປ້ອນຊື່ສີນຄ້າ"
+          }
+          if(!values.company.catchPhrase){
+            errors.company.catchPhrase = "ກະລຸນາປ້ອນລາຍລະອຽດສີນຄ້າ"
+          }
+          if(!values.company.bs){
+            errors.company.bs = "ກະລຸນາປ້ອນຊື່ສີນຄ້າ"
+          }
+          return errors;
+        }}
